@@ -41,29 +41,24 @@ jobs:
         run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
       - name: Rename zmk.uf2
         run: cp build/zephyr/zmk.uf2 algeboard_left.uf2
-      - name: Archive (ALGEBOARD Left)
-        uses: actions/upload-artifact@v4
-        with:
-          name: algeboard_left
-          path: algeboard_left.uf2
       - name: West Build (ALGEBOARD Right)
         run: west build --pristine -s zmk/app -b nrfmicro_13 -- -DSHIELD=algeboard_right -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
       - name: ALGEBOARD Right Kconfig file
         run: cat build/zephyr/.config | grep -v "^#" | grep -v "^$"
       - name: Rename zmk.uf2
         run: cp build/zephyr/zmk.uf2 algeboard_right.uf2
-      - name: Archive (ALGEBOARD Right)
-        uses: actions/upload-artifact@v4
-        with:
-          name: algeboard_right
-          path: algeboard_right.uf2
-
       - name: West Build (Reset firmware)
         run: west build --pristine -s zmk/app -b nrfmicro_13 -- -DSHIELD=settings_reset -DZMK_CONFIG="${GITHUB_WORKSPACE}/config"
       - name: Rename zmk.uf2
         run: cp build/zephyr/zmk.uf2 reset.uf2
-      - name: Archive (Reset)
+      - name: Archive all firmwares
+        run: |
+          mkdir -p artifacts
+          cp algeboard_left.uf2 artifacts/
+          cp algeboard_right.uf2 artifacts/
+          cp reset.uf2 artifacts/
+      - name: Upload all firmwares
         uses: actions/upload-artifact@v4
         with:
-          name: reset
-          path: reset.uf2
+          name: algeboard_firmwares
+          path: artifacts/
