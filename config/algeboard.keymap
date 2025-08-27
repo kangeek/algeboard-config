@@ -89,14 +89,14 @@
         sw_win: switchto_win {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LG(LA(BACKSLASH)) &to 1 &bt BT_SEL 1>;
+            bindings = <&kp LG(LA(F11)) &to 1 &bt BT_SEL 1>;
             label = "SWITCHTO_WIN";
         };
 
         sw_mac: switchto_mac {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp LC(LA(BACKSLASH)) &to 0 &bt BT_SEL 0>;
+            bindings = <&kp LC(LA(F11)) &to 0 &bt BT_SEL 0>;
             label = "SWITCHTO_MAC";
         };
     };
